@@ -44,7 +44,7 @@ public class WorkerTest {
   @ParameterizedTest
   @NullAndEmptySource
   public void nullOrEmptyNameThrowsIllegalArgument(String name) {
-    assertThrows(IllegalArgumentException.class, () -> new Worker(null, defaultQualifications, defaultSalary));
+    assertThrows(IllegalArgumentException.class, () -> new Worker(name, defaultQualifications, defaultSalary));
   }
 
   private static Stream<Arguments> emptyQualificationsSetArgument() {
@@ -211,6 +211,11 @@ public class WorkerTest {
   @Test
   public void willOverloadThrowsNullPointerIfProjectNull() {
     assertThrows(NullPointerException.class, () -> worker.willOverload(null));
+  }
+
+  @Test
+  public void willNotOverload() {
+    assertFalse(worker.willOverload(new Project("tt", defaultQualifications, ProjectSize.SMALL)));
   }
 
   @ParameterizedTest

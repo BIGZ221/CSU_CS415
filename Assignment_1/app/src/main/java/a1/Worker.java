@@ -78,16 +78,11 @@ public class Worker {
   }
 
   private int getWorkloadAmount(ProjectSize size) {
-    switch (size) {
-      case SMALL:
-        return 1;
-      case MEDIUM:
-        return 2;
-      case BIG:
-        return 3;
-      default:
-        throw new IllegalArgumentException("Unknown size attempted");
-    }
+    if (size == ProjectSize.SMALL)
+      return 1;
+    if (size == ProjectSize.MEDIUM)
+      return 2;
+    return 3;
   }
 
   public void addProject(Project p) {
