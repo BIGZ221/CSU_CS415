@@ -18,6 +18,8 @@ public class Project {
       throw new NullPointerException("Qualifications must not be null");
     if (qualifications.isEmpty())
       throw new IllegalArgumentException("Qualifications must not be empty");
+    if (size == null)
+      throw new NullPointerException("Size must not be null");
     this.name = name;
     this.qualifications = qualifications;
     this.size = size;
