@@ -19,3 +19,16 @@ Worker Class:
 
 Project Class:
   if name is null or empty when attempting to construct a Project an IllegalArgumentException will be thrown.
+  if qualifications is null when constructing a NullPointerException will be thrown.
+  if qualifications is empty when constructing an IllegalArgumentException will be thrown.
+  if string passed to setName is null or empty an IllegalArgumentException will be thrown.
+  if size passed to setSize is null a NullPointerException will be thrown.
+  if status passed to setStatus is null a NullPointerException will be thrown.
+  if worker passed to addWorker is null a NullPointerException will be thrown.
+  if worker passed to addWorker is a duplicate an IllegalArgumentException will be thrown.
+  if worker passed to removeWorker is null a NullPointerException will be thrown.
+  if worker passed to removeWorker does not exist an IllegalArgumentException will be thrown.
+  if qualification passed to addQualification is null a NullPointerException will be thrown.
+  if qualification passed to addQualification is a duplicate an IllegalArgumentException will be thrown.
+  if worker passed to isHelpful is null a NullPointerException will be thrown.
+  
