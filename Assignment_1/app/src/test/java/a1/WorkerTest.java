@@ -44,7 +44,7 @@ public class WorkerTest {
   @ParameterizedTest
   @NullAndEmptySource
   public void nullOrEmptyNameThrowsIllegalArgument(String name) {
-    assertThrows(IllegalArgumentException.class, () -> new Worker(name, defaultQualifications, defaultSalary));
+    assertThrows(RuntimeException.class, () -> new Worker(name, defaultQualifications, defaultSalary));
   }
 
   private static Stream<Arguments> emptyQualificationsSetArgument() {
@@ -56,7 +56,7 @@ public class WorkerTest {
   @NullSource
   @MethodSource("emptyQualificationsSetArgument")
   public void nullOrEmptyQualificationsThrowsIllegalArgument(Set<Qualification> qualifications) {
-    assertThrows(IllegalArgumentException.class, () -> new Worker(defaultName, qualifications, defaultSalary));
+    assertThrows(RuntimeException.class, () -> new Worker(defaultName, qualifications, defaultSalary));
   }
 
   @ParameterizedTest
@@ -99,7 +99,7 @@ public class WorkerTest {
   @ParameterizedTest
   @NullAndEmptySource
   public void nullOrEmptySetNameThrowsIllegalArgument(String newName) {
-    assertThrows(IllegalArgumentException.class, () -> worker.setName(newName));
+    assertThrows(RuntimeException.class, () -> worker.setName(newName));
   }
 
   @Test
@@ -116,7 +116,7 @@ public class WorkerTest {
 
   @Test
   public void negativeSetSalaryThrowsIllegalArgument() {
-    assertThrows(IllegalArgumentException.class, () -> worker.setSalary(-1.2));
+    assertThrows(RuntimeException.class, () -> worker.setSalary(-1.2));
   }
 
   @Test
@@ -126,7 +126,7 @@ public class WorkerTest {
 
   @Test
   public void addNullQualificationThrowsIllegalArgument() {
-    assertThrows(NullPointerException.class, () -> worker.addQualification(null));
+    assertThrows(RuntimeException.class, () -> worker.addQualification(null));
   }
 
   @Test
@@ -137,7 +137,7 @@ public class WorkerTest {
 
   @Test
   public void addDuplicateQualificationThrowsIllegalArgumentException() {
-    assertThrows(IllegalArgumentException.class,
+    assertThrows(RuntimeException.class,
         () -> worker.addQualification(defaultQualifications.iterator().next()));
   }
 
@@ -148,7 +148,7 @@ public class WorkerTest {
 
   @Test
   public void nullAddProjectThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> worker.addProject(null));
+    assertThrows(RuntimeException.class, () -> worker.addProject(null));
   }
 
   @Test
@@ -160,12 +160,12 @@ public class WorkerTest {
   @Test
   public void addDuplicateProjectThrowsIllegalArgument() {
     worker.addProject(testingProject);
-    assertThrows(IllegalArgumentException.class, () -> worker.addProject(testingProject));
+    assertThrows(RuntimeException.class, () -> worker.addProject(testingProject));
   }
 
   @Test
   public void removeNullProjectThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> worker.removeProject(null));
+    assertThrows(RuntimeException.class, () -> worker.removeProject(null));
   }
 
   @Test
@@ -210,7 +210,7 @@ public class WorkerTest {
 
   @Test
   public void willOverloadThrowsNullPointerIfProjectNull() {
-    assertThrows(NullPointerException.class, () -> worker.willOverload(null));
+    assertThrows(RuntimeException.class, () -> worker.willOverload(null));
   }
 
   @Test
@@ -231,7 +231,7 @@ public class WorkerTest {
   public void willOverloadDuplicateThrowsIllegalArgument() {
     Project dupe = new Project("test", defaultQualifications, ProjectSize.MEDIUM);
     worker.addProject(dupe);
-    assertThrows(IllegalArgumentException.class, () -> worker.willOverload(dupe));
+    assertThrows(RuntimeException.class, () -> worker.willOverload(dupe));
   }
 
   @Test

@@ -34,7 +34,7 @@ public class QualificationTest {
   @DisplayName("Throws IllegalArgumentException if description is null or empty")
   @NullAndEmptySource
   public void constructorWithNullOrEmpty(String desc) {
-    assertThrows(IllegalArgumentException.class, () -> new Qualification(desc));
+    assertThrows(RuntimeException.class, () -> new Qualification(desc));
   }
 
   @ParameterizedTest
@@ -66,7 +66,7 @@ public class QualificationTest {
 
   @Test
   public void nullAddWorkerThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> qualification.addWorker(null));
+    assertThrows(RuntimeException.class, () -> qualification.addWorker(null));
   }
 
   @ParameterizedTest
@@ -82,7 +82,7 @@ public class QualificationTest {
 
   @Test
   public void nullRemoveWorkerThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> qualification.removeWorker(null));
+    assertThrows(RuntimeException.class, () -> qualification.removeWorker(null));
   }
 
   @ParameterizedTest

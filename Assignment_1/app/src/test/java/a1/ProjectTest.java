@@ -39,18 +39,24 @@ public class ProjectTest {
   @ParameterizedTest
   @NullAndEmptySource
   public void constructorThrowsIllegalArgumentOnNullEmptyName(String name) {
-    assertThrows(IllegalArgumentException.class, () -> new Project(name, defaultQualifications, ProjectSize.SMALL));
+    assertThrows(RuntimeException.class, () -> new Project(name, defaultQualifications, ProjectSize.SMALL));
   }
 
   @Test
   public void constructorThrowsNullPointerOnNullQualifications() {
-    assertThrows(NullPointerException.class, () -> new Project("test",
+    assertThrows(RuntimeException.class, () -> new Project("test",
         null, ProjectSize.SMALL));
   }
 
   @Test
   public void constructorThrowsIllegalArgumentOnEmptyQualifications() {
-    assertThrows(IllegalArgumentException.class, () -> new Project("test", new HashSet<>(), ProjectSize.SMALL));
+    assertThrows(RuntimeException.class, () -> new Project("test", new HashSet<>(), ProjectSize.SMALL));
+  }
+
+  @Test
+  public void constructorThrowsNullPointerOnNullSize() {
+    assertThrows(RuntimeException.class, () -> new Project("test",
+        defaultQualifications, null));
   }
 
   @ParameterizedTest
@@ -91,7 +97,7 @@ public class ProjectTest {
   @ParameterizedTest
   @NullAndEmptySource
   public void setNameWithNullOrEmptyThrowsIllegalArgument(String newName) {
-    assertThrows(IllegalArgumentException.class, () -> project.setName(newName));
+    assertThrows(RuntimeException.class, () -> project.setName(newName));
   }
 
   @Test
@@ -101,7 +107,7 @@ public class ProjectTest {
 
   @Test
   public void setSizeNullThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> project.setSize(null));
+    assertThrows(RuntimeException.class, () -> project.setSize(null));
   }
 
   @ParameterizedTest
@@ -118,7 +124,7 @@ public class ProjectTest {
 
   @Test
   public void setStatusNullThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> project.setStatus(null));
+    assertThrows(RuntimeException.class, () -> project.setStatus(null));
   }
 
   @ParameterizedTest
@@ -135,7 +141,7 @@ public class ProjectTest {
 
   @Test
   public void addNullWorkerThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> project.addWorker(null));
+    assertThrows(RuntimeException.class, () -> project.addWorker(null));
   }
 
   @Test
@@ -149,18 +155,18 @@ public class ProjectTest {
   public void duplicateAddWorkerThrowsIllegalArgument() {
     Worker w = new Worker("name", defaultQualifications, 123.3);
     project.addWorker(w);
-    assertThrows(IllegalArgumentException.class, () -> project.addWorker(w));
+    assertThrows(RuntimeException.class, () -> project.addWorker(w));
   }
 
   @Test
   public void removeNullWorkerThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> project.removeWorker(null));
+    assertThrows(RuntimeException.class, () -> project.removeWorker(null));
   }
 
   @Test
   public void removeUnknownWorkerThrowsIllegalArgument() {
     Worker w = new Worker("name", defaultQualifications, 123.3);
-    assertThrows(IllegalArgumentException.class, () -> project.removeWorker(w));
+    assertThrows(RuntimeException.class, () -> project.removeWorker(w));
   }
 
   @Test
@@ -187,7 +193,7 @@ public class ProjectTest {
 
   @Test
   public void addNullQualificationThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> project.addQualification(null));
+    assertThrows(RuntimeException.class, () -> project.addQualification(null));
   }
 
   @Test
@@ -201,7 +207,7 @@ public class ProjectTest {
   public void duplicateQualificationThrowsIllegalArgument() {
     Qualification q = new Qualification("192");
     project.addQualification(q);
-    assertThrows(IllegalArgumentException.class, () -> project.addQualification(q));
+    assertThrows(RuntimeException.class, () -> project.addQualification(q));
   }
 
   @Test
@@ -226,7 +232,7 @@ public class ProjectTest {
 
   @Test
   public void isHelpfulNullWorkerThrowsNullPointer() {
-    assertThrows(NullPointerException.class, () -> project.isHelpful(null));
+    assertThrows(RuntimeException.class, () -> project.isHelpful(null));
   }
 
   private static Stream<Arguments> helpfulWorkerArgumentProvider() {
