@@ -1,0 +1,21 @@
+All Classes:
+  On each of the classes I defined the hashCode override to be able to use HashSets
+
+Qualification Class:
+  if description is null or empty when attempting to construct, an IllegalArgumentException will be thrown.
+  if worker is null when adding or removing a worker a NullPointerException will be thrown.
+
+Worker Class:
+  if name is null or empty when attempting to construct an IllegalArgumentException will be thrown.
+  if qualifications is null or empty when attempting to construct an IllegalArgumentException will be thrown.
+  if string passed to setName is null or empty an IllegalArgumentException will be thrown.
+  if double passed to setSalary is negative an IllegalArgumentException will be thrown. Employee making negative doesn't make sense
+  if qualification to be added is null a NullPointerException will be thrown.
+  if qualification to be added is a duplicate an IllegalArgumentException will be thrown.
+  if project to be added is null a NullPointerException will be thrown.
+  if project to be added is a duplicate an IllegalArgumentException will be thrown.
+  if project passed to willOverload is null a NullPointerException will be thrown.
+  if project passed to willOverload is a duplicate an IllegalArgumentException will be thrown.
+
+Project Class:
+  if name is null or empty when attempting to construct a Project an IllegalArgumentException will be thrown.
