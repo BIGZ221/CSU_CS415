@@ -22,11 +22,11 @@ import org.junit.jupiter.params.provider.NullSource;
 
 public class WorkerTest {
 
-  Worker worker;
-  String defaultName;
-  Double defaultSalary;
-  Set<Qualification> defaultQualifications;
-  Project testingProject;
+  private Worker worker;
+  private String defaultName;
+  private Double defaultSalary;
+  private Set<Qualification> defaultQualifications;
+  private Project testingProject;
 
   @BeforeEach
   void setupWorker() {
@@ -43,7 +43,7 @@ public class WorkerTest {
 
   @ParameterizedTest
   @NullAndEmptySource
-  public void nullOrEmptyNameThrowsIllegalArgument(String name) {
+  void nullOrEmptyNameThrowsIllegalArgument(String name) {
     assertThrows(RuntimeException.class, () -> new Worker(name, defaultQualifications, defaultSalary));
   }
 
@@ -55,13 +55,13 @@ public class WorkerTest {
   @ParameterizedTest
   @NullSource
   @MethodSource("emptyQualificationsSetArgument")
-  public void nullOrEmptyQualificationsThrowsIllegalArgument(Set<Qualification> qualifications) {
+  void nullOrEmptyQualificationsThrowsIllegalArgument(Set<Qualification> qualifications) {
     assertThrows(RuntimeException.class, () -> new Worker(defaultName, qualifications, defaultSalary));
   }
 
   @ParameterizedTest
   @CsvSource({ "name, true", "not, false" })
-  public void workerEquals(String name, Boolean result) {
+  void workerEquals(String name, Boolean result) {
     Worker a = new Worker(name, defaultQualifications, defaultSalary);
     if (result) {
       assertEquals(this.worker, a, "Qualifications are not equal when they should be.");
@@ -71,26 +71,26 @@ public class WorkerTest {
   }
 
   @Test
-  public void workerNotEqualsOtherObject() {
+  void workerNotEqualsOtherObject() {
     Object x = new Object();
     assertNotEquals(this.worker, x);
   }
 
   @ParameterizedTest
   @CsvSource({ "12.0003, 12", "15.9999, 15", "0, 0", "10000.20, 10000" })
-  public void workerStringifiesCorrectly(double salary, int expectedSalary) {
+  void workerStringifiesCorrectly(double salary, int expectedSalary) {
     Worker a = new Worker(defaultName, defaultQualifications, salary);
     String expected = String.format("name:0:2:%d", expectedSalary);
     assertEquals(expected, a.toString());
   }
 
   @Test
-  public void getNameCorrectly() {
+  void getNameCorrectly() {
     assertEquals(defaultName, worker.getName());
   }
 
   @Test
-  public void setNameCorrectly() {
+  void setNameCorrectly() {
     String newName = "herald";
     worker.setName(newName);
     assertEquals(newName, worker.getName());
@@ -98,85 +98,85 @@ public class WorkerTest {
 
   @ParameterizedTest
   @NullAndEmptySource
-  public void nullOrEmptySetNameThrowsIllegalArgument(String newName) {
+  void nullOrEmptySetNameThrowsIllegalArgument(String newName) {
     assertThrows(RuntimeException.class, () -> worker.setName(newName));
   }
 
   @Test
-  public void getSalaryCorrectly() {
+  void getSalaryCorrectly() {
     assertEquals(defaultSalary, worker.getSalary());
   }
 
   @Test
-  public void setSalaryCorrectly() {
+  void setSalaryCorrectly() {
     double newSalary = 987.654;
     worker.setSalary(newSalary);
     assertEquals(newSalary, worker.getSalary());
   }
 
   @Test
-  public void negativeSetSalaryThrowsIllegalArgument() {
+  void negativeSetSalaryThrowsIllegalArgument() {
     assertThrows(RuntimeException.class, () -> worker.setSalary(-1.2));
   }
 
   @Test
-  public void returnsCorrectQualifications() {
+  void returnsCorrectQualifications() {
     assertEquals(defaultQualifications, worker.getQualifications());
   }
 
   @Test
-  public void addNullQualificationThrowsIllegalArgument() {
+  void addNullQualificationThrowsIllegalArgument() {
     assertThrows(RuntimeException.class, () -> worker.addQualification(null));
   }
 
   @Test
-  public void addUniqueQualification() {
+  void addUniqueQualification() {
     worker.addQualification(new Qualification("test"));
     assertEquals(3, worker.getQualifications().size());
   }
 
   @Test
-  public void addDuplicateQualificationThrowsIllegalArgumentException() {
+  void addDuplicateQualificationThrowsIllegalArgumentException() {
     assertThrows(RuntimeException.class,
         () -> worker.addQualification(defaultQualifications.iterator().next()));
   }
 
   @Test
-  public void defaultProjects() {
+  void defaultProjects() {
     assertTrue(worker.getProjects().isEmpty());
   }
 
   @Test
-  public void nullAddProjectThrowsNullPointer() {
+  void nullAddProjectThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> worker.addProject(null));
   }
 
   @Test
-  public void addProjectAddsProjectCorrectly() {
+  void addProjectAddsProjectCorrectly() {
     worker.addProject(testingProject);
     assertTrue(worker.getProjects().contains(testingProject));
   }
 
   @Test
-  public void addDuplicateProjectThrowsIllegalArgument() {
+  void addDuplicateProjectThrowsIllegalArgument() {
     worker.addProject(testingProject);
     assertThrows(RuntimeException.class, () -> worker.addProject(testingProject));
   }
 
   @Test
-  public void removeNullProjectThrowsNullPointer() {
+  void removeNullProjectThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> worker.removeProject(null));
   }
 
   @Test
-  public void removeProjectRemoveProjectCorrectly() {
+  void removeProjectRemoveProjectCorrectly() {
     worker.addProject(testingProject);
     worker.removeProject(testingProject);
     assertFalse(worker.getProjects().contains(testingProject));
   }
 
   @Test
-  public void defaultWorkload() {
+  void defaultWorkload() {
     assertEquals(0, worker.getWorkload());
   }
 
@@ -187,7 +187,7 @@ public class WorkerTest {
 
   @ParameterizedTest
   @MethodSource("addingWorkLoadArgumentsProvider")
-  public void addingProjectIncreasesWorkloadByCorrectSize(ProjectSize size, int expectedWorkload) {
+  void addingProjectIncreasesWorkloadByCorrectSize(ProjectSize size, int expectedWorkload) {
     Project p = new Project("test", defaultQualifications, size);
     worker.addProject(p);
     assertEquals(expectedWorkload, worker.getWorkload());
@@ -195,7 +195,7 @@ public class WorkerTest {
 
   @ParameterizedTest
   @MethodSource("addingWorkLoadArgumentsProvider")
-  public void removingProjectDecreasesWorkloadByCorrectSize(ProjectSize size, int workload) {
+  void removingProjectDecreasesWorkloadByCorrectSize(ProjectSize size, int workload) {
     Project p = new Project("test", defaultQualifications, size);
     worker.addProject(p);
     assumeTrue(worker.getWorkload() == workload);
@@ -209,18 +209,18 @@ public class WorkerTest {
   }
 
   @Test
-  public void willOverloadThrowsNullPointerIfProjectNull() {
+  void willOverloadThrowsNullPointerIfProjectNull() {
     assertThrows(RuntimeException.class, () -> worker.willOverload(null));
   }
 
   @Test
-  public void willNotOverload() {
+  void willNotOverload() {
     assertFalse(worker.willOverload(new Project("tt", defaultQualifications, ProjectSize.SMALL)));
   }
 
   @ParameterizedTest
   @MethodSource("willOverloadArgumentsProvider")
-  public void workerWillOverloadWithCorrectProjects(ProjectSize size, int projectsToOverload) {
+  void workerWillOverloadWithCorrectProjects(ProjectSize size, int projectsToOverload) {
     for (int i = 0; i < projectsToOverload - 1; i++) {
       worker.addProject(new Project(String.valueOf(i), defaultQualifications, size));
     }
@@ -228,19 +228,19 @@ public class WorkerTest {
   }
 
   @Test
-  public void willOverloadDuplicateThrowsIllegalArgument() {
+  void willOverloadDuplicateThrowsIllegalArgument() {
     Project dupe = new Project("test", defaultQualifications, ProjectSize.MEDIUM);
     worker.addProject(dupe);
     assertThrows(RuntimeException.class, () -> worker.willOverload(dupe));
   }
 
   @Test
-  public void isAvailableByDefault() {
+  void isAvailableByDefault() {
     assertTrue(worker.isAvailable());
   }
 
   @Test
-  public void notAvailableIfWorkloadIsTwelve() {
+  void notAvailableIfWorkloadIsTwelve() {
     for (int i = 0; i < 12; i++) {
       worker.addProject(new Project(String.valueOf(i), defaultQualifications, ProjectSize.SMALL));
     }

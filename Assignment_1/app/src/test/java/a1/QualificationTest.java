@@ -33,13 +33,13 @@ public class QualificationTest {
   @ParameterizedTest
   @DisplayName("Throws IllegalArgumentException if description is null or empty")
   @NullAndEmptySource
-  public void constructorWithNullOrEmpty(String desc) {
+  void constructorWithNullOrEmpty(String desc) {
     assertThrows(RuntimeException.class, () -> new Qualification(desc));
   }
 
   @ParameterizedTest
   @CsvSource({ "name, true", "not, false" })
-  public void qualificationEquals(String desc, Boolean result) {
+  void qualificationEquals(String desc, Boolean result) {
     Qualification a = new Qualification(desc);
     if (result) {
       assertEquals(this.qualification, a, "Qualifications are not equal when they should be.");
@@ -49,29 +49,29 @@ public class QualificationTest {
   }
 
   @Test
-  public void qualificationNotEqualsOtherObject() {
+  void qualificationNotEqualsOtherObject() {
     Object x = new Object();
     assertNotEquals(this.qualification, x);
   }
 
   @Test
-  public void stringifiesCorrectly() {
+  void stringifiesCorrectly() {
     assertEquals(description, qualification.toString());
   }
 
   @Test
-  public void defaultWorkers() {
+  void defaultWorkers() {
     assertTrue(qualification.getWorkers().isEmpty());
   }
 
   @Test
-  public void nullAddWorkerThrowsNullPointer() {
+  void nullAddWorkerThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> qualification.addWorker(null));
   }
 
   @ParameterizedTest
   @CsvSource({ "a, 1", "a;b, 2", "a;a, 1" })
-  public void addWorkers(String names, int expectedWorkers) {
+  void addWorkers(String names, int expectedWorkers) {
     String[] workerNames = names.split(";");
     for (String name : workerNames) {
       Worker w = new Worker(name, workerQualifications, 123.0);
@@ -81,13 +81,13 @@ public class QualificationTest {
   }
 
   @Test
-  public void nullRemoveWorkerThrowsNullPointer() {
+  void nullRemoveWorkerThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> qualification.removeWorker(null));
   }
 
   @ParameterizedTest
   @CsvSource({ "a, a, 0, ;", "a;b;c, b;c, 1, a", "a;b,;, 2,a;b" })
-  public void removeWorkers(String namesToAdd, String namesToRemove, int expectedWorkers, String expectedWorkerNames) {
+  void removeWorkers(String namesToAdd, String namesToRemove, int expectedWorkers, String expectedWorkerNames) {
     String[] addedWorkerNames = namesToAdd.split(";");
     String[] removedWorkerNames = namesToRemove.split(";");
     String[] expectedWorkersToExist = expectedWorkerNames.split(";");

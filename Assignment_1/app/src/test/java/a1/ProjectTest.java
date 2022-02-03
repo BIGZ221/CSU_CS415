@@ -27,7 +27,7 @@ public class ProjectTest {
   private Project project;
 
   @BeforeEach
-  public void setupProject() {
+  void setupProject() {
     defaultName = "name";
     Qualification q = new Qualification("coffee");
     defaultQualifications = new HashSet<>();
@@ -38,30 +38,30 @@ public class ProjectTest {
 
   @ParameterizedTest
   @NullAndEmptySource
-  public void constructorThrowsIllegalArgumentOnNullEmptyName(String name) {
+  void constructorThrowsIllegalArgumentOnNullEmptyName(String name) {
     assertThrows(RuntimeException.class, () -> new Project(name, defaultQualifications, ProjectSize.SMALL));
   }
 
   @Test
-  public void constructorThrowsNullPointerOnNullQualifications() {
+  void constructorThrowsNullPointerOnNullQualifications() {
     assertThrows(RuntimeException.class, () -> new Project("test",
         null, ProjectSize.SMALL));
   }
 
   @Test
-  public void constructorThrowsIllegalArgumentOnEmptyQualifications() {
+  void constructorThrowsIllegalArgumentOnEmptyQualifications() {
     assertThrows(RuntimeException.class, () -> new Project("test", new HashSet<>(), ProjectSize.SMALL));
   }
 
   @Test
-  public void constructorThrowsNullPointerOnNullSize() {
+  void constructorThrowsNullPointerOnNullSize() {
     assertThrows(RuntimeException.class, () -> new Project("test",
         defaultQualifications, null));
   }
 
   @ParameterizedTest
   @CsvSource({ "name, name, true", "name, not, false" })
-  public void projectEquality(String name, String expected, Boolean isEqual) {
+  void projectEquality(String name, String expected, Boolean isEqual) {
     Project a = new Project(expected, defaultQualifications, defaultSize);
     Project b = new Project(name, defaultQualifications, defaultSize);
     if (isEqual) {
@@ -72,23 +72,23 @@ public class ProjectTest {
   }
 
   @Test
-  public void projectNotEqualNonProject() {
+  void projectNotEqualNonProject() {
     assertNotEquals(project, new Object());
   }
 
   @Test
-  public void stringifyCorrectly() {
+  void stringifyCorrectly() {
     String expected = "name:0:PLANNED";
     assertEquals(expected, project.toString());
   }
 
   @Test
-  public void getNameReturnsCorrectName() {
+  void getNameReturnsCorrectName() {
     assertEquals(defaultName, project.getName());
   }
 
   @Test
-  public void setNameThenGetNameEqual() {
+  void setNameThenGetNameEqual() {
     String newName = "jerry";
     project.setName(newName);
     assertEquals(newName, project.getName());
@@ -96,81 +96,81 @@ public class ProjectTest {
 
   @ParameterizedTest
   @NullAndEmptySource
-  public void setNameWithNullOrEmptyThrowsIllegalArgument(String newName) {
+  void setNameWithNullOrEmptyThrowsIllegalArgument(String newName) {
     assertThrows(RuntimeException.class, () -> project.setName(newName));
   }
 
   @Test
-  public void getSizeReturnsCorrectSize() {
+  void getSizeReturnsCorrectSize() {
     assertEquals(defaultSize, project.getSize());
   }
 
   @Test
-  public void setSizeNullThrowsNullPointer() {
+  void setSizeNullThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> project.setSize(null));
   }
 
   @ParameterizedTest
   @EnumSource(ProjectSize.class)
-  public void setSizeAndGetSize(ProjectSize size) {
+  void setSizeAndGetSize(ProjectSize size) {
     project.setSize(size);
     assertEquals(size, project.getSize());
   }
 
   @Test
-  public void getSizeReturnsCorrectStatus() {
+  void getSizeReturnsCorrectStatus() {
     assertEquals(ProjectStatus.PLANNED, project.getStatus());
   }
 
   @Test
-  public void setStatusNullThrowsNullPointer() {
+  void setStatusNullThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> project.setStatus(null));
   }
 
   @ParameterizedTest
   @EnumSource(ProjectStatus.class)
-  public void setStatusAndGetStatus(ProjectStatus status) {
+  void setStatusAndGetStatus(ProjectStatus status) {
     project.setStatus(status);
     assertEquals(status, project.getStatus());
   }
 
   @Test
-  public void defaultWorkers() {
+  void defaultWorkers() {
     assertTrue(project.getWorkers().isEmpty());
   }
 
   @Test
-  public void addNullWorkerThrowsNullPointer() {
+  void addNullWorkerThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> project.addWorker(null));
   }
 
   @Test
-  public void addWorkersResultsInCorrectSet() {
+  void addWorkersResultsInCorrectSet() {
     Worker w = new Worker("name", defaultQualifications, 123.3);
     project.addWorker(w);
     assertTrue(project.getWorkers().contains(w));
   }
 
   @Test
-  public void duplicateAddWorkerThrowsIllegalArgument() {
+  void duplicateAddWorkerThrowsIllegalArgument() {
     Worker w = new Worker("name", defaultQualifications, 123.3);
     project.addWorker(w);
     assertThrows(RuntimeException.class, () -> project.addWorker(w));
   }
 
   @Test
-  public void removeNullWorkerThrowsNullPointer() {
+  void removeNullWorkerThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> project.removeWorker(null));
   }
 
   @Test
-  public void removeUnknownWorkerThrowsIllegalArgument() {
+  void removeUnknownWorkerThrowsIllegalArgument() {
     Worker w = new Worker("name", defaultQualifications, 123.3);
     assertThrows(RuntimeException.class, () -> project.removeWorker(w));
   }
 
   @Test
-  public void workerIsRemovedCorrectly() {
+  void workerIsRemovedCorrectly() {
     Worker w = new Worker("name", defaultQualifications, 123.3);
     project.addWorker(w);
     project.removeWorker(w);
@@ -178,7 +178,7 @@ public class ProjectTest {
   }
 
   @Test
-  public void removeAllWorkersRemovesAll() {
+  void removeAllWorkersRemovesAll() {
     Worker w = new Worker("name", defaultQualifications, 123.3);
     project.addWorker(w);
     assumeTrue(project.getWorkers().size() == 1);
@@ -187,43 +187,43 @@ public class ProjectTest {
   }
 
   @Test
-  public void defaultQualifications() {
+  void defaultQualifications() {
     assertEquals(defaultQualifications, project.getRequiredQualifications());
   }
 
   @Test
-  public void addNullQualificationThrowsNullPointer() {
+  void addNullQualificationThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> project.addQualification(null));
   }
 
   @Test
-  public void qualificationAddedCorrectly() {
+  void qualificationAddedCorrectly() {
     Qualification q = new Qualification("192");
     project.addQualification(q);
     assertTrue(project.getRequiredQualifications().contains(q));
   }
 
   @Test
-  public void duplicateQualificationThrowsIllegalArgument() {
+  void duplicateQualificationThrowsIllegalArgument() {
     Qualification q = new Qualification("192");
     project.addQualification(q);
     assertThrows(RuntimeException.class, () -> project.addQualification(q));
   }
 
   @Test
-  public void getMissingQualificationsDefault() {
+  void getMissingQualificationsDefault() {
     assertEquals(defaultQualifications, project.getMissingQualifications());
   }
 
   @Test
-  public void noMissingQualificationsReturnsEmpty() {
+  void noMissingQualificationsReturnsEmpty() {
     Worker w = new Worker("name", defaultQualifications, 12.3);
     project.addWorker(w);
     assertTrue(project.getMissingQualifications().isEmpty());
   }
 
   @Test
-  public void noQualificationsAreMetByWorkers() {
+  void noQualificationsAreMetByWorkers() {
     Set<Qualification> workerQuals = new HashSet<>();
     workerQuals.add(new Qualification("eating"));
     project.addWorker(new Worker("tim", workerQuals, 11.0));
@@ -231,7 +231,7 @@ public class ProjectTest {
   }
 
   @Test
-  public void isHelpfulNullWorkerThrowsNullPointer() {
+  void isHelpfulNullWorkerThrowsNullPointer() {
     assertThrows(RuntimeException.class, () -> project.isHelpful(null));
   }
 
@@ -247,7 +247,7 @@ public class ProjectTest {
 
   @ParameterizedTest
   @MethodSource("helpfulWorkerArgumentProvider")
-  public void workerIsHelpful(Worker w, boolean isHelpful) {
+  void workerIsHelpful(Worker w, boolean isHelpful) {
     assertEquals(isHelpful, project.isHelpful(w));
   }
 
