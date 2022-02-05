@@ -211,6 +211,16 @@ public class ProjectTest {
   }
 
   @Test
+  void addQualificationToActiveChangesToSuspended() {
+    Qualification q = new Qualification("33");
+    Qualification q1 = new Qualification("333");
+    project.addQualification(q);
+    project.setStatus(ProjectStatus.ACTIVE);
+    project.addQualification(q1);
+    assertEquals(ProjectStatus.SUSPENDED, project.getStatus());
+  }
+
+  @Test
   void getMissingQualificationsDefault() {
     assertEquals(defaultQualifications, project.getMissingQualifications());
   }

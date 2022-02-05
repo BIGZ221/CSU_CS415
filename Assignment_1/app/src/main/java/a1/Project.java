@@ -109,6 +109,8 @@ public class Project {
     if (qualifications.contains(q))
       throw new IllegalArgumentException();
     qualifications.add(q);
+    if (status == ProjectStatus.ACTIVE)
+      setStatus(ProjectStatus.SUSPENDED);
   }
 
   public Set<Qualification> getMissingQualifications() {
