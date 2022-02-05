@@ -1,5 +1,5 @@
 All Classes:
-  On each of the classes I defined the hashCode override to be able to use HashSets
+  On each of the classes except Company I defined the hashCode override to be able to use HashSets
 
 Qualification Class:
   if description is null or empty when attempting to construct, an IllegalArgumentException will be thrown.
@@ -31,4 +31,18 @@ Project Class:
   if qualification passed to addQualification is null a NullPointerException will be thrown.
   if qualification passed to addQualification is a duplicate an IllegalArgumentException will be thrown.
   if worker passed to isHelpful is null a NullPointerException will be thrown.
-  
+
+Company Class:
+  if name is null or empty when attempting to construct a Company an IllegalArgumentException will be thrown.
+  if name passed to setName is null or empty an IllegalArgumentException will be thrown.
+  if description passed to createQualification is null or empty null is returned.
+  if name passed to createProject is null or empty null is returned.
+  if worker or project passed to assign is null a NullPointerException is thrown.
+  if worker is not availabe and assign is called an IllegalArgumentException will be thrown.
+  if worker is already assigned to project and assign is called an IllegalArgumentException will be thrown.
+  if project is active/finished and assign is called an IllegalArgumentException will be thrown.
+  if worker is not helpful to the project and assign is called an IllegalArgumentException will be thrown.
+  if worker or project passed to unassign is null a NullPointerException is thrown.
+  if worker is not assigned to project passed to unassign an IllegalArgumentException will be thrown.
+  if worker passed to unassignAll is null a NullPointerException will be thrown.
+  if project passed to finish is null a NullPointerException is thrown.
